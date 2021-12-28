@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+</head>
+
+<body>
+	<div class="container">
+		<!-- 导航条 -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">190110910309 郭佳俊 19计算机2班</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    
+                    <li class="nav-item dropdown"><a id="loginname" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"><%=longinname%></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="Allusers">Search all</a>
+                        <a class="dropdown-item" href="changepass.jsp">Change password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="Logout">退出登录</a>
+                        </div>
+                    </li>
+                </ul>
+                
+            </div>
+        </nav>
+
+		<!-- 内容  -->
+		<div class="row" style="margin-top: 10px">
+
+            <div class="col-lg-3">
+
+                <div class="list-group">
+                    <a href="frontPage.jsp" class="list-group-item list-group-item-action">首页</a>
+                    <a href="InfoModel?uploadname=${logineduser}" class="list-group-item list-group-item-action">个人信息</a>
+                    <a href="Menu.jsp" class="list-group-item list-group-item-action">菜单浏览</a>
+                    <a href="OrderList?uploadname=${logineduser}" class="list-group-item list-group-item-action">我的订单</a>
+                    <a href="PassChange.jsp" class="list-group-item list-group-item-action">修改密码</a>
+                    <a href="UserAdm" class="list-group-item list-group-item-action">用户管理</a>
+                    <a class="list-group-item list-group-item-action" href="Logout">退出登录</a>
+                </div>
+            
+            </div>
+
+			<div class="col-lg-6">
+
+				<div class="jumbotron">
+					<h1 class="display-4">登录成功</h1>
+					<p class="lead">欢迎您!!!</p>
+					<hr class="my-4">
+					<p class="lead">可以点击左侧菜单进行下单操作</p>
+					<div class="row">
+						<div class="col-lg-5">
+							<img alt="" src="photo/front1.png">
+						</div>
+						<div class="col-lg-5">
+							<img alt="" src="photo/front2.png">
+						</div>
+						<div class="col-lg-5">
+							<img alt="" src="photo/front3.png">
+						</div>
+						<div class="col-lg-5">
+							<img alt="" src="photo/front4.png">
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+
+			
+		</div>
+
+	</div>
+
+
+</body>
+</html>
