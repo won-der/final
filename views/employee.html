@@ -45,7 +45,7 @@
                 <div class="list-group">
                     <a href="/frontpage?username=<%=longinname%>" class="list-group-item list-group-item-action">首页</a>
                     <a href="/personal?username=<%=longinname%>" class="list-group-item list-group-item-action">个人信息</a>
-                    <a href="#" class="list-group-item list-group-item-action">求职请求</a>
+                    <a href="#" class="list-group-item list-group-item-action">疫苗预约</a>
                     <a href="/change_pass?username=<%=longinname%>" class="list-group-item list-group-item-action">修改密码</a>
                     <a class="list-group-item list-group-item-action" href="index.html">退出登录</a>
                 </div>
@@ -54,14 +54,32 @@
 
 			<div class="col-lg-6">
 
-				<div class="jumbotron">
-					<h1 class="display-4">登录成功</h1>
-					<p class="lead">欢迎您!!!</p>
-					<hr class="my-4">
-					<p class="lead">可以点击左侧菜单进行操作</p>
-
-				</div>
-
+                <form action="/appointment" method="GET">
+                    <p id = "info" style="color:red;margin-bottom: 0%;"><%=info %></p>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">用户</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="username" class="form-control" id="username" value="<%=longinname%>" onfocus=this.blur()>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">请选择您要预约的公司：</label>
+                        <div class="col-sm-9">
+                            <select id="chosen" name="chosen" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                <option value="company1">company1</option>
+                                <option value="company2">company2</option>
+                                <option value="company3">company3</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <input type="submit" value="提交预约" style="width:100px">
+                        </div>
+                    </div>
+                </form>
 
 			</div>
 
@@ -71,4 +89,10 @@
 
 	</div>
 </body>
+<script>
+	var a = document.getElementById('info').innerHTML;
+    if(a=="null"){
+    document.getElementById('info').style.display="none";
+    }
+</script>
 </html>

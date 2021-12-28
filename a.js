@@ -22,9 +22,18 @@ UserSchema = {
     "name": String,
     "age":String,
     "gender":String,
-    "manager":String
+    "manager":String,
+    "inoculate":String
+    }
+AppointmentSchema = {
+    "name": String,
+    "age":String,
+    "gender":String,
+    "company":String,
+    "handle":String
     }
 var User = mongoose.model("users",UserSchema,"users")
+var Appointment = mongoose.model("appointments",AppointmentSchema,"appointments")
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -69,7 +78,7 @@ app.get("/reg",(req,res)=>{
                     res.sendFile(__dirname+"/views/reg.html")
                 }else{
                 if(account!=""&&password!=""&&username!=""&&age!=""&&gender!=""){
-                    User.insertMany({"account":account,"password": password,"name": username,"age":age,"gender":gender,"manager":0})
+                    User.insertMany({"account":account,"password": password,"name": username,"age":age,"gender":gender,"manager":0,"inoculate":"0"})
                     res.render("frontpage.html",{longinname:username})
                     res.sendFile(__dirname+"/views/frontpage.html")
                 }else{
@@ -102,7 +111,23 @@ app.get('/change',(req,res)=>{
         }
     })
 })
-
+//提交预约申请
+app.get('/appointment',(req,res)=>{
+    username = req.query.username
+    company = req.query.company
+    Appointment.findOne({"name":username},(err,app)=>{
+        if(app!=null){
+            res.render("employee.html",{longinname:username,info:"您已经预约，请等待处理"})
+            res.sendFile(__dirname+"/views/employee.html")
+        }else{
+            User.findOne({"username":username},(err,user)=>{
+                Appointment.insertMany({"name":username ,"age":user.age,"gender":user.gender,"company":company,"handle":"0"})
+                res.render("employee.html",{longinname:username,info:"预约成功"})
+                res.sendFile(__dirname+"/views/employee.html")
+            })
+        }
+    })
+})
 //跳转到首页
 app.get('/frontpage',(req,res)=>{
     a = req.url.split("?")
@@ -115,16 +140,20 @@ app.get('/personal',(req,res)=>{
     a = req.url.split("?")
     username = a[1].split("=")[1]
     User.findOne({"username":username},(err,user)=>{
-
-        res.render("personal.html",{longinname:username,account:user.account,age:user.age,gender:user.gender})
+        if(user.inoculate=="0")
+            ino = "未预约"
+        else
+            ino = "已预约"
+        res.render("personal.html",{longinname:username,account:user.account,age:user.age,gender:user.gender,inoculate:ino})
         res.sendFile(__dirname+"/views/personal.html")
     })
 })
-//跳转到求职申请页面
+
+//跳转到疫苗预约页面
 app.get('/employee',(req,res)=>{
     a = req.url.split("?")
     username = a[1].split("=")[1]
-    res.render("employee.html",{longinname:username})
+    res.render("employee.html",{longinname:username,info:"null"})
     res.sendFile(__dirname+"/views/employee.html")
 })
 //跳转到修改密码界面
