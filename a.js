@@ -114,8 +114,11 @@ app.get('/frontpage',(req,res)=>{
 app.get('/personal',(req,res)=>{
     a = req.url.split("?")
     username = a[1].split("=")[1]
-    res.render("personal.html",{longinname:username})
-    res.sendFile(__dirname+"/views/personal.html")
+    User.findOne({"username":username},(err,user)=>{
+
+        res.render("personal.html",{longinname:username,account:user.account,age:user.age,gender:user.gender})
+        res.sendFile(__dirname+"/views/personal.html")
+    })
 })
 //跳转到求职申请页面
 app.get('/employee',(req,res)=>{
