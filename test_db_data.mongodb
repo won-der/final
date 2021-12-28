@@ -1,0 +1,24 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('finalclass');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against the correct database and collection.
+db.users.drop();
+
+// Insert a few documents into the sales collection.
+db.users.insertMany([
+  { "account":"111","password": "111","name": "wang","age":"18","gender":"男","manager":"0"},
+  { "account":"222","password": "222","name": "li","age":"28","gender":"女","manager":"0"},
+  { "account":"333","password": "333","name": "huang","age":"23","gender":"男","manager":"0"},
+  { "account":"444","password": "444","name": "bai","age":"24","gender":"男","manager":"0"},
+  { "account":"555","password": "555","name": "he","age":"25","gender":"女","manager":"0"},
+  { "account":"aaa","password": "aaa","name": "company1","age":"30","gender":"男","manager":"1"},
+  { "account":"bbb","password": "bbb","name": "company1","age":"50","gender":"男","manager":"1"},
+  { "account":"ccc","password": "ccc","name": "company1","age":"40","gender":"男","manager":"1"},
+]);
+
