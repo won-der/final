@@ -3,17 +3,10 @@ const mongoose = require("mongoose")
 const path = require("path")
 const jsdom = require("jsdom")
 const jquery = require("jquery")(new jsdom.JSDOM().window)
-const session = require("express-session")
-const { name } = require("ejs")
-const { url } = require("inspector")
-var document = new jsdom.JSDOM().window.document
+
 // const db_option = require("./db_option")
 const app = express()
-app.use(session({
-    secret: 'sessiontest',
-    resave: true,
-    saveUninitialized:true
-}))
+
 //链接mongodb
 mongoose.connect("mongodb://localhost:27017/finalclass")
 UserSchema = {
