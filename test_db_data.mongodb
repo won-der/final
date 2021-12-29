@@ -9,7 +9,7 @@ use('finalclass');
 // The drop() command destroys all data from a collection.
 // Make sure you run it against the correct database and collection.
 db.users.drop();
-
+db.appointments.drop();
 // Insert a few documents into the sales collection.
 db.users.insertMany([
   { "account":"111","password": "111","name": "wang","age":"18","gender":"男","manager":"0","inoculate":"0"},
@@ -21,4 +21,11 @@ db.users.insertMany([
   { "account":"bbb","password": "bbb","name": "company1","age":"50","gender":"男","manager":"1","inoculate":"0"},
   { "account":"ccc","password": "ccc","name": "company1","age":"40","gender":"男","manager":"1","inoculate":"0"},
 ]);
+db.appointments.insertMany([
+  {"name":'wang' ,"age":"18","gender":"男","company":'company1',"handle":"0"},
+  {"name":'li' ,"age":"28","gender":"女","company":'company2',"handle":"0"},
+  {"name":'huang' ,"age":"23","gender":"男","company":'company1',"handle":"0"},
+  {"name":'bai' ,"age":"24","gender":"男","company":'company3',"handle":"0"},
+  {"name":'he' ,"age":"25","gender":"女","company":'company2',"handle":"0"},
+])
 

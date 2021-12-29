@@ -48,8 +48,13 @@ app.get("/login",(req,res)=>{
     User.findOne({"account":account,"password":password},(err,user)=>{
         if(user!=null){ 
             username = String(user.name)
-            res.render("frontpage.html",{longinname:username})
-            res.sendFile(__dirname+"/views/frontpage.html")
+            if(user.manager=="1"){
+                res.render("employer.html",{longinname:username,info:"null"})
+                res.sendFile(__dirname+"/views/employer.html")
+            }else{
+                res.render("frontpage.html",{longinname:username})
+                res.sendFile(__dirname+"/views/frontpage.html")
+            }
         }
         else 
         {
@@ -77,14 +82,14 @@ app.get("/reg",(req,res)=>{
                     res.render("reg.html",{info:"已存在该用户名，请更换用户名"})
                     res.sendFile(__dirname+"/views/reg.html")
                 }else{
-                if(account!=""&&password!=""&&username!=""&&age!=""&&gender!=""){
-                    User.insertMany({"account":account,"password": password,"name": username,"age":age,"gender":gender,"manager":0,"inoculate":"0"})
-                    res.render("frontpage.html",{longinname:username})
-                    res.sendFile(__dirname+"/views/frontpage.html")
-                }else{
-                    res.render("reg.html",{info:"请输入完整注册信息"})
-                    res.sendFile(__dirname+"/views/reg.html")
-                }
+                    if(account!=""&&password!=""&&username!=""&&age!=""&&gender!=""){
+                        User.insertMany({"account":account,"password": password,"name": username,"age":age,"gender":gender,"manager":0,"inoculate":"0"})
+                        res.render("frontpage.html",{longinname:username})
+                        res.sendFile(__dirname+"/views/frontpage.html")
+                    }else{
+                        res.render("reg.html",{info:"请输入完整注册信息"})
+                        res.sendFile(__dirname+"/views/reg.html")
+                    }
                 }
             })
         }
@@ -128,6 +133,43 @@ app.get('/appointment',(req,res)=>{
         }
     })
 })
+//获取所有预约
+app.get('/list', (req, res) => {
+    username = req.url.split("?")[1]
+    var htmlRe = ""
+    Appointment.count((err, counts) => {
+        if (counts) {
+            htmlRe = htmlRe + "<table class='table col-sm-12'><thead><tr><th scope='col'>申请者</th><th scope='col'>年龄</th><th scope='col'>性别</th><th scope='col'>预约公司</th><th scope='col'>申请内容</th><th scope='col'>处理方式</th></tr></thead><tbody>"
+            Appointment.find({"company":username}, null, null, (err, result) => {
+                result.forEach((value, index) => {
+                    htmlRe = htmlRe + "<tr>"
+                    htmlRe = htmlRe + "<td height=10% id='name"+index+"'>"+value.name+"</td>"
+                    htmlRe = htmlRe + "<td id='number"+index+"'>"+value.age+"</td>"
+                    htmlRe = htmlRe + "<td id='lou"+index+"'>"+value.gender+"</td>"
+                    htmlRe = htmlRe + "<td id='hu"+index+"'>"+value.company+"</td>"
+                    if(value.handle=="0"){
+                        htmlRe = htmlRe + "<td id='statu"+index+"'>"+"未处理"+"</td>"
+                        htmlRe = htmlRe + "<td id='acc"+index+"'><button class='btn btn-primary' onclick = 'acc("+index+")'>接受预约</td>"
+                    }else{
+                        htmlRe = htmlRe + "<td id='statu"+index+"'>"+"已处理"+"</td>"
+                    }
+                })
+                htmlRe = htmlRe + "</tbody></table>"
+                res.send(htmlRe)
+            })
+        } else {
+            res.send("<p>没有请求</p>")
+        }
+    })
+})
+//接受预约操作
+app.get('/accept', (req, res) => {
+    username = req.url.split("?")[1]
+    Appointment.updateOne({"name":username},{"handle":"1"},(err,a)=>{
+        res.send("<p id = 'info' style='color:red;margin-bottom: 0%;'>操作成功</p>")
+    })
+})
+
 //跳转到首页
 app.get('/frontpage',(req,res)=>{
     a = req.url.split("?")
